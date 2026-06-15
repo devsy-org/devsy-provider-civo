@@ -1,3 +1,4 @@
-env
-devpod-provider-civo
-releases
+/.idea
+/test
+.DS_Store
+dist/

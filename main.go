@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/loft-sh/devpod-provider-civo/cmd"
+	"github.com/devsy-org/devsy-provider-civo/cmd"
 )
 
 func main() {

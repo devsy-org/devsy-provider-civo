@@ -3,17 +3,15 @@ package cmd
 import (
 	"context"
 
-	"github.com/loft-sh/devpod-provider-civo/pkg/civo"
-
-	"github.com/loft-sh/devpod/pkg/log"
-	"github.com/loft-sh/devpod/pkg/provider"
+	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
+	"github.com/devsy-org/log"
 	"github.com/spf13/cobra"
 )
 
-// StopCmd holds the cmd flags
+// StopCmd holds the cmd flags.
 type StopCmd struct{}
 
-// NewStopCmd defines a command
+// NewStopCmd defines a command.
 func NewStopCmd() *cobra.Command {
 	cmd := &StopCmd{}
 	stopCmd := &cobra.Command{
@@ -28,7 +26,6 @@ func NewStopCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				provider.FromEnvironment(),
 				log.Default,
 			)
 		},
@@ -37,13 +34,11 @@ func NewStopCmd() *cobra.Command {
 	return stopCmd
 }
 
-// Run runs the command logic
+// Run runs the command logic.
 func (cmd *StopCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	machine *provider.Machine,
 	logs log.Logger,
 ) error {
-
 	return civo.Stop(providerCivo)
 }

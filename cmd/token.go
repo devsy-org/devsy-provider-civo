@@ -2,12 +2,10 @@ package cmd
 
 import (
 	"context"
-	"fmt"
+	"os"
 
-	"github.com/loft-sh/devpod-provider-civo/pkg/civo"
-
-	"github.com/loft-sh/devpod/pkg/log"
-	"github.com/loft-sh/devpod/pkg/provider"
+	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
+	"github.com/devsy-org/log"
 	"github.com/spf13/cobra"
 )
 
@@ -24,10 +22,10 @@ type InstanceTokenAccessConfig struct {
 	NatIP string `json:"natIP,omitempty"`
 }
 
-// TokenCmd holds the cmd flags
+// TokenCmd holds the cmd flags.
 type TokenCmd struct{}
 
-// NewTokenCmd defines a command
+// NewTokenCmd defines a command.
 func NewTokenCmd() *cobra.Command {
 	cmd := &TokenCmd{}
 	tokenCmd := &cobra.Command{
@@ -42,7 +40,6 @@ func NewTokenCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				provider.FromEnvironment(),
 				log.Default,
 			)
 		},
@@ -51,11 +48,10 @@ func NewTokenCmd() *cobra.Command {
 	return tokenCmd
 }
 
-// Run runs the command logic
+// Run runs the command logic.
 func (cmd *TokenCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	machine *provider.Machine,
 	logs log.Logger,
 ) error {
 	token, err := civo.AccessToken()
@@ -63,6 +59,6 @@ func (cmd *TokenCmd) Run(
 		return err
 	}
 
-	fmt.Println(token)
-	return nil
+	_, err = os.Stdout.WriteString(token + "\n")
+	return err
 }

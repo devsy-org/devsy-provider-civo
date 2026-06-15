@@ -4,15 +4,15 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/loft-sh/devpod/pkg/log"
+	"github.com/devsy-org/log"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh"
 )
 
-// NewRootCmd returns a new root command
+// NewRootCmd returns a new root command.
 func NewRootCmd() *cobra.Command {
 	civoCmd := &cobra.Command{
-		Use:           "devpod-provider-civo",
+		Use:           "devsy-provider-civo",
 		Short:         "civo Provider commands",
 		SilenceErrors: true,
 		SilenceUsage:  true,
@@ -49,7 +49,7 @@ func Execute() {
 	}
 }
 
-// BuildRoot creates a new root command from the
+// BuildRoot creates a new root command with all subcommands attached.
 func BuildRoot() *cobra.Command {
 	rootCmd := NewRootCmd()
 

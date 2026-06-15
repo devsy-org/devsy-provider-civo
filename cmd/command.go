@@ -5,18 +5,17 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/loft-sh/devpod-provider-civo/pkg/civo"
-	"github.com/loft-sh/devpod/pkg/log"
-	"github.com/loft-sh/devpod/pkg/provider"
-	"github.com/loft-sh/devpod/pkg/ssh"
+	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
+	"github.com/devsy-org/devsy/pkg/ssh"
+	"github.com/devsy-org/log"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
 
-// CommandCmd holds the cmd flags
+// CommandCmd holds the cmd flags.
 type CommandCmd struct{}
 
-// NewCommandCmd defines a command
+// NewCommandCmd defines a command.
 func NewCommandCmd() *cobra.Command {
 	cmd := &CommandCmd{}
 	commandCmd := &cobra.Command{
@@ -31,7 +30,6 @@ func NewCommandCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				provider.FromEnvironment(),
 				log.Default,
 			)
 		},
@@ -40,11 +38,10 @@ func NewCommandCmd() *cobra.Command {
 	return commandCmd
 }
 
-// Run runs the command logic
+// Run runs the command logic.
 func (cmd *CommandCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	machine *provider.Machine,
 	logs log.Logger,
 ) error {
 	command := os.Getenv("COMMAND")
@@ -55,14 +52,27 @@ func (cmd *CommandCmd) Run(
 
 	// get instance
 	instance, err := civo.GetDevpodInstance(providerCivo)
-	sshClient, err := ssh.NewSSHPassClient("civo", instance.PublicIP+":22", instance.InitialPassword)
+	if err != nil {
+		return errors.Wrap(err, "get instance")
+	}
 
+	sshClient, err := ssh.NewSSHPassClient(
+		"civo",
+		instance.PublicIP+":22",
+		instance.InitialPassword,
+	)
 	if err != nil {
 		return errors.Wrap(err, "create ssh client")
 	}
 
-	defer sshClient.Close()
+	defer func() { _ = sshClient.Close() }()
 
 	// run command
-	return ssh.Run(ctx, sshClient, command, os.Stdin, os.Stdout, os.Stderr)
+	return ssh.Run(ctx, ssh.RunOptions{
+		Client:  sshClient,
+		Command: command,
+		Stdin:   os.Stdin,
+		Stdout:  os.Stdout,
+		Stderr:  os.Stderr,
+	})
 }
