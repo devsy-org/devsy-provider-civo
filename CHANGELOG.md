@@ -1,1 +1,13 @@
 # Changelog
+
+## 1.0.0 (2026-06-15)
+
+
+### Bug Fixes
+
+* default to a more sensible instance size ([f119736](https://github.com/devsy-org/devsy-provider-civo/commit/f1197360635e496a25a3f8a697bb7c596efdf765))
+* revert to normal start/stop, better performances ([3eb16ae](https://github.com/devsy-org/devsy-provider-civo/commit/3eb16aede0c95d23898d8a188ce578e938922cf8))
+* use external volume and destroy/create vm on stop/start in order to consume less ([c323237](https://github.com/devsy-org/devsy-provider-civo/commit/c323237a33d054f9ce7f3b0d0631bf4bcfeff8d9))
+* use passwords for ssh commands ([bdbe4a2](https://github.com/devsy-org/devsy-provider-civo/commit/bdbe4a29fba8f5f676ab7713d909c8e386973b82))
+
+## Changelog
