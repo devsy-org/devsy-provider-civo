@@ -3,6 +3,7 @@ package options
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 var (
@@ -48,26 +49,37 @@ func FromEnv(init, withFolder bool) (*Options, error) {
 		return nil, err
 	}
 
-	// Return eraly if we're just doing init
+	// Return early if we're just doing init.
 	if init {
 		return retOptions, nil
 	}
 
-	retOptions.MachineID, err = fromEnvOrError("MACHINE_ID")
-	if err != nil {
+	if err := loadMachineOptions(retOptions, withFolder); err != nil {
 		return nil, err
-	}
-	// prefix with devpod-
-	retOptions.MachineID = "devpod-" + retOptions.MachineID
-
-	if withFolder {
-		retOptions.MachineFolder, err = fromEnvOrError("MACHINE_FOLDER")
-		if err != nil {
-			return nil, err
-		}
 	}
 
 	return retOptions, nil
+}
+
+func loadMachineOptions(opts *Options, withFolder bool) error {
+	machineID, err := fromEnvOrError("MACHINE_ID")
+	if err != nil {
+		return err
+	}
+	// prefix with devsy-
+	if !strings.HasPrefix(machineID, "devsy-") {
+		machineID = "devsy-" + machineID
+	}
+	opts.MachineID = machineID
+
+	if withFolder {
+		opts.MachineFolder, err = fromEnvOrError("MACHINE_FOLDER")
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func fromEnvOrError(name string) (string, error) {

@@ -4,38 +4,30 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/loft-sh/devpod-provider-civo/pkg/options"
-	"github.com/loft-sh/devpod/pkg/client"
-	"github.com/loft-sh/devpod/pkg/log"
-
 	"github.com/civo/civogo"
+	"github.com/devsy-org/devsy-provider-civo/pkg/options"
+	"github.com/devsy-org/devsy/pkg/client"
+	"github.com/devsy-org/log"
 	"github.com/pkg/errors"
 )
 
 type CivoToken struct {
-	APIKey string "json:apikey"
-	Region string "json:region"
+	APIKey string `json:"apikey"`
+	Region string `json:"region"`
 }
 
 var tokenJSON CivoToken
 
+type CivoProvider struct {
+	Config           *options.Options
+	Client           *civogo.Client
+	Log              log.Logger
+	WorkingDirectory string
+}
+
 func NewProvider(withFolder bool, logs log.Logger) (*CivoProvider, error) {
-	civoToken := os.Getenv("CIVO_TOKEN")
-	if civoToken != "" {
-		err := json.Unmarshal([]byte(civoToken), &tokenJSON)
-		if err != nil {
-			return nil, err
-		}
-
-		err = os.Setenv("CIVO_API_KEY", tokenJSON.APIKey)
-		if err != nil {
-			return nil, err
-		}
-
-		err = os.Setenv("CIVO_REGION", tokenJSON.Region)
-		if err != nil {
-			return nil, err
-		}
+	if err := loadTokenEnv(); err != nil {
+		return nil, err
 	}
 
 	civoApiKey := os.Getenv("CIVO_API_KEY")
@@ -49,7 +41,6 @@ func NewProvider(withFolder bool, logs log.Logger) (*CivoProvider, error) {
 	}
 
 	config, err := options.FromEnv(false, withFolder)
-
 	if err != nil {
 		return nil, err
 	}
@@ -69,11 +60,21 @@ func NewProvider(withFolder bool, logs log.Logger) (*CivoProvider, error) {
 	return provider, nil
 }
 
-type CivoProvider struct {
-	Config           *options.Options
-	Client           *civogo.Client
-	Log              log.Logger
-	WorkingDirectory string
+func loadTokenEnv() error {
+	civoToken := os.Getenv("CIVO_TOKEN")
+	if civoToken == "" {
+		return nil
+	}
+
+	if err := json.Unmarshal([]byte(civoToken), &tokenJSON); err != nil {
+		return err
+	}
+
+	if err := os.Setenv("CIVO_API_KEY", tokenJSON.APIKey); err != nil {
+		return err
+	}
+
+	return os.Setenv("CIVO_REGION", tokenJSON.Region)
 }
 
 func AccessToken() (string, error) {
@@ -96,6 +97,7 @@ func AccessToken() (string, error) {
 	tokenJSON.APIKey = civoApiKey
 	tokenJSON.Region = civoRegion
 
+	//nolint:gosec // AccessToken is intentionally marshaled for provider use
 	result, err := json.Marshal(tokenJSON)
 
 	return string(result), err
@@ -106,7 +108,6 @@ func GetDevpodInstance(civoProvider *CivoProvider) (*civogo.Instance, error) {
 }
 
 func Create(civoProvider *CivoProvider) error {
-
 	config, err := civoProvider.Client.NewInstanceConfig()
 	if err != nil {
 		return err
@@ -126,6 +127,7 @@ func Create(civoProvider *CivoProvider) error {
 
 	return nil
 }
+
 func Delete(civoProvider *CivoProvider) error {
 	instance, err := GetDevpodInstance(civoProvider)
 	if err != nil {
@@ -174,10 +176,10 @@ func Status(civoProvider *CivoProvider) (client.Status, error) {
 		return client.StatusNotFound, nil
 	}
 
-	switch {
-	case instance.Status == "ACTIVE":
+	switch instance.Status {
+	case "ACTIVE":
 		return client.StatusRunning, nil
-	case instance.Status == "SHUTOFF":
+	case "SHUTOFF":
 		return client.StatusStopped, nil
 	default:
 		return client.StatusBusy, nil

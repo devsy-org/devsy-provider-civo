@@ -5,10 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/loft-sh/devpod-provider-civo/pkg/civo"
-
-	"github.com/loft-sh/devpod/pkg/log"
-	"github.com/loft-sh/devpod/pkg/provider"
+	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
+	"github.com/devsy-org/log"
 	"github.com/spf13/cobra"
 )
 
@@ -25,10 +23,10 @@ type InstanceStatusAccessConfig struct {
 	NatIP string `json:"natIP,omitempty"`
 }
 
-// StatusCmd holds the cmd flags
+// StatusCmd holds the cmd flags.
 type StatusCmd struct{}
 
-// NewStatusCmd defines a command
+// NewStatusCmd defines a command.
 func NewStatusCmd() *cobra.Command {
 	cmd := &StatusCmd{}
 	statusCmd := &cobra.Command{
@@ -43,7 +41,6 @@ func NewStatusCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				provider.FromEnvironment(),
 				log.Default,
 			)
 		},
@@ -52,14 +49,12 @@ func NewStatusCmd() *cobra.Command {
 	return statusCmd
 }
 
-// Run runs the command logic
+// Run runs the command logic.
 func (cmd *StatusCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	machine *provider.Machine,
 	logs log.Logger,
 ) error {
-
 	status, err := civo.Status(providerCivo)
 	if err != nil {
 		return err
