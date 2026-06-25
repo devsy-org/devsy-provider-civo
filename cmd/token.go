@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
-	"github.com/devsy-org/log"
 	"github.com/spf13/cobra"
 )
 
@@ -32,7 +31,7 @@ func NewTokenCmd() *cobra.Command {
 		Use:   "token",
 		Short: "Token an instance",
 		RunE: func(_ *cobra.Command, args []string) error {
-			civoProvider, err := civo.NewProvider(true, log.Default)
+			civoProvider, err := civo.NewProvider(true)
 			if err != nil {
 				return err
 			}
@@ -40,7 +39,6 @@ func NewTokenCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				log.Default,
 			)
 		},
 	}
@@ -52,7 +50,6 @@ func NewTokenCmd() *cobra.Command {
 func (cmd *TokenCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	logs log.Logger,
 ) error {
 	token, err := civo.AccessToken()
 	if err != nil {

@@ -7,7 +7,6 @@ import (
 
 	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
 	"github.com/devsy-org/devsy/pkg/ssh"
-	"github.com/devsy-org/log"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -22,7 +21,7 @@ func NewCommandCmd() *cobra.Command {
 		Use:   "command",
 		Short: "Command an instance",
 		RunE: func(_ *cobra.Command, args []string) error {
-			civoProvider, err := civo.NewProvider(true, log.Default)
+			civoProvider, err := civo.NewProvider(true)
 			if err != nil {
 				return err
 			}
@@ -30,7 +29,6 @@ func NewCommandCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				log.Default,
 			)
 		},
 	}
@@ -42,7 +40,6 @@ func NewCommandCmd() *cobra.Command {
 func (cmd *CommandCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	logs log.Logger,
 ) error {
 	command := os.Getenv("COMMAND")
 

@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
-	"github.com/devsy-org/log"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +32,7 @@ func NewStatusCmd() *cobra.Command {
 		Use:   "status",
 		Short: "Status an instance",
 		RunE: func(_ *cobra.Command, args []string) error {
-			civoProvider, err := civo.NewProvider(true, log.Default)
+			civoProvider, err := civo.NewProvider(true)
 			if err != nil {
 				return err
 			}
@@ -41,7 +40,6 @@ func NewStatusCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				log.Default,
 			)
 		},
 	}
@@ -53,7 +51,6 @@ func NewStatusCmd() *cobra.Command {
 func (cmd *StatusCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	logs log.Logger,
 ) error {
 	status, err := civo.Status(providerCivo)
 	if err != nil {

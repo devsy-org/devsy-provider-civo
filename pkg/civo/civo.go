@@ -7,7 +7,6 @@ import (
 	"github.com/civo/civogo"
 	"github.com/devsy-org/devsy-provider-civo/pkg/options"
 	"github.com/devsy-org/devsy/pkg/client"
-	"github.com/devsy-org/log"
 	"github.com/pkg/errors"
 )
 
@@ -21,11 +20,10 @@ var tokenJSON CivoToken
 type CivoProvider struct {
 	Config           *options.Options
 	Client           *civogo.Client
-	Log              log.Logger
 	WorkingDirectory string
 }
 
-func NewProvider(withFolder bool, logs log.Logger) (*CivoProvider, error) {
+func NewProvider(withFolder bool) (*CivoProvider, error) {
 	if err := loadTokenEnv(); err != nil {
 		return nil, err
 	}
@@ -54,7 +52,6 @@ func NewProvider(withFolder bool, logs log.Logger) (*CivoProvider, error) {
 	provider := &CivoProvider{
 		Config: config,
 		Client: client,
-		Log:    logs,
 	}
 
 	return provider, nil
