@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
-	"github.com/devsy-org/log"
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +17,7 @@ func NewDeleteCmd() *cobra.Command {
 		Use:   "delete",
 		Short: "Delete an instance",
 		RunE: func(_ *cobra.Command, args []string) error {
-			civoProvider, err := civo.NewProvider(true, log.Default)
+			civoProvider, err := civo.NewProvider(true)
 			if err != nil {
 				return err
 			}
@@ -26,7 +25,6 @@ func NewDeleteCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				log.Default,
 			)
 		},
 	}
@@ -38,7 +36,6 @@ func NewDeleteCmd() *cobra.Command {
 func (cmd *DeleteCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	logs log.Logger,
 ) error {
 	return civo.Delete(providerCivo)
 }

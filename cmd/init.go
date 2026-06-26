@@ -6,7 +6,6 @@ import (
 
 	"github.com/civo/civogo"
 	"github.com/devsy-org/devsy-provider-civo/pkg/options"
-	"github.com/devsy-org/log"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -23,7 +22,6 @@ func NewInitCmd() *cobra.Command {
 		RunE: func(_ *cobra.Command, args []string) error {
 			return cmd.Run(
 				context.Background(),
-				log.Default,
 			)
 		},
 	}
@@ -34,7 +32,6 @@ func NewInitCmd() *cobra.Command {
 // Run runs the init logic.
 func (cmd *InitCmd) Run(
 	ctx context.Context,
-	logs log.Logger,
 ) error {
 	civoToken := os.Getenv("CIVO_API_KEY")
 	if civoToken == "" {

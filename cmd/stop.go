@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/devsy-org/devsy-provider-civo/pkg/civo"
-	"github.com/devsy-org/log"
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +17,7 @@ func NewStopCmd() *cobra.Command {
 		Use:   "stop",
 		Short: "Stop an instance",
 		RunE: func(_ *cobra.Command, args []string) error {
-			civoProvider, err := civo.NewProvider(false, log.Default)
+			civoProvider, err := civo.NewProvider(false)
 			if err != nil {
 				return err
 			}
@@ -26,7 +25,6 @@ func NewStopCmd() *cobra.Command {
 			return cmd.Run(
 				context.Background(),
 				civoProvider,
-				log.Default,
 			)
 		},
 	}
@@ -38,7 +36,6 @@ func NewStopCmd() *cobra.Command {
 func (cmd *StopCmd) Run(
 	ctx context.Context,
 	providerCivo *civo.CivoProvider,
-	logs log.Logger,
 ) error {
 	return civo.Stop(providerCivo)
 }
