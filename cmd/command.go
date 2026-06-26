@@ -48,7 +48,7 @@ func (cmd *CommandCmd) Run(
 	}
 
 	// get instance
-	instance, err := civo.GetDevpodInstance(providerCivo)
+	instance, err := civo.GetDevsyInstance(providerCivo)
 	if err != nil {
 		return errors.Wrap(err, "get instance")
 	}
