@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/devsy-org/devsy-provider-civo/compare/v1.0.0...v1.1.0) (2026-06-26)
+
+
+### Miscellaneous Chores
+
+* release 1.1.0 ([#14](https://github.com/devsy-org/devsy-provider-civo/issues/14)) ([165659b](https://github.com/devsy-org/devsy-provider-civo/commit/165659b00859f5679ed531a4be7399d3b8011f13))
+
 ## 1.0.0 (2026-06-15)
 
 
