@@ -100,7 +100,7 @@ func AccessToken() (string, error) {
 	return string(result), err
 }
 
-func GetDevpodInstance(civoProvider *CivoProvider) (*civogo.Instance, error) {
+func GetDevsyInstance(civoProvider *CivoProvider) (*civogo.Instance, error) {
 	return civoProvider.Client.FindInstance(civoProvider.Config.MachineID)
 }
 
@@ -126,7 +126,7 @@ func Create(civoProvider *CivoProvider) error {
 }
 
 func Delete(civoProvider *CivoProvider) error {
-	instance, err := GetDevpodInstance(civoProvider)
+	instance, err := GetDevsyInstance(civoProvider)
 	if err != nil {
 		return err
 	}
@@ -140,7 +140,7 @@ func Delete(civoProvider *CivoProvider) error {
 }
 
 func Start(civoProvider *CivoProvider) error {
-	instance, err := GetDevpodInstance(civoProvider)
+	instance, err := GetDevsyInstance(civoProvider)
 	if err != nil {
 		return err
 	}
@@ -154,7 +154,7 @@ func Start(civoProvider *CivoProvider) error {
 }
 
 func Stop(civoProvider *CivoProvider) error {
-	instance, err := GetDevpodInstance(civoProvider)
+	instance, err := GetDevsyInstance(civoProvider)
 	if err != nil {
 		return err
 	}
@@ -168,7 +168,7 @@ func Stop(civoProvider *CivoProvider) error {
 }
 
 func Status(civoProvider *CivoProvider) (client.Status, error) {
-	instance, err := GetDevpodInstance(civoProvider)
+	instance, err := GetDevsyInstance(civoProvider)
 	if err != nil {
 		return client.StatusNotFound, nil
 	}
