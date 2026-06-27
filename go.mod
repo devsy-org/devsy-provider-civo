@@ -1,9 +1,9 @@
 module github.com/devsy-org/devsy-provider-civo
 
-go 1.25.8
+go 1.25.10
 
 require (
-	github.com/civo/civogo v0.3.28
+	github.com/civo/civogo v0.7.2
 	github.com/devsy-org/devsy v1.0.0
 	github.com/goccy/go-yaml v1.19.2
 	github.com/pkg/errors v0.9.1
