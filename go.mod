@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/civo/civogo v0.7.2
-	github.com/devsy-org/devsy v1.4.2
+	github.com/devsy-org/devsy v1.5.0
 	github.com/goccy/go-yaml v1.19.2
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.10.2
