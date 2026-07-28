@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/civo/civogo v0.7.2
-	github.com/devsy-org/devsy v1.10.0
+	github.com/devsy-org/devsy v1.11.0
 	github.com/goccy/go-yaml v1.19.2
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.10.2
@@ -119,7 +119,7 @@ require (
 	github.com/prometheus/procfs v0.20.1 // indirect
 	github.com/sirupsen/logrus v1.9.4 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
-	github.com/tailscale/hujson v0.0.0-20260722022634-78b5b162ee49 // indirect
+	github.com/tailscale/hujson v0.0.0-20260727124030-b80ff77dac4f // indirect
 	github.com/tonistiigi/go-csvvalue v0.0.0-20240814133006-030d3b2625d0 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	go.etcd.io/etcd/api/v3 v3.6.8 // indirect
