@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/civo/civogo v0.7.2
-	github.com/devsy-org/devsy v1.11.0
+	github.com/devsy-org/devsy v1.11.2
 	github.com/goccy/go-yaml v1.19.2
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.10.2
@@ -87,7 +87,7 @@ require (
 	github.com/google/cel-go v0.27.0 // indirect
 	github.com/google/gnostic-models v0.7.1 // indirect
 	github.com/google/go-containerregistry v0.21.7 // indirect
-	github.com/google/go-containerregistry/pkg/authn/kubernetes v0.0.0-20260725002307-afc8f33a809d // indirect
+	github.com/google/go-containerregistry/pkg/authn/kubernetes v0.0.0-20260729013301-b757a3cd02a7 // indirect
 	github.com/google/go-querystring v1.2.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware/providers/prometheus v1.1.0 // indirect
