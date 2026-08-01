@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.15](https://github.com/devsy-org/devsy-provider-civo/compare/v1.1.14...v1.1.15) (2026-08-01)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/devsy-org/devsy to v1.12.1 ([#64](https://github.com/devsy-org/devsy-provider-civo/issues/64)) ([7f25b14](https://github.com/devsy-org/devsy-provider-civo/commit/7f25b14f13ec9f2185fdad83ecfa0ff7f10be963))
+
 ## [1.1.14](https://github.com/devsy-org/devsy-provider-civo/compare/v1.1.13...v1.1.14) (2026-07-29)
 
 
