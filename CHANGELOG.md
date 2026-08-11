@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.19](https://github.com/devsy-org/devsy-provider-civo/compare/v1.1.18...v1.1.19) (2026-08-11)
+
+
+### Bug Fixes
+
+* **deps:** update module golang.org/x/crypto to v0.55.0 ([#73](https://github.com/devsy-org/devsy-provider-civo/issues/73)) ([88b9ab7](https://github.com/devsy-org/devsy-provider-civo/commit/88b9ab78ea58d0b77ab7ceb0bba2cd1c8e47074b))
+
 ## [1.1.18](https://github.com/devsy-org/devsy-provider-civo/compare/v1.1.17...v1.1.18) (2026-08-09)
 
 
