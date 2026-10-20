@@ -1,6 +1,6 @@
 module github.com/devsy-org/devsy-provider-civo
 
-go 1.26.3
+go 1.26.10
 
 require (
 	github.com/civo/civogo v0.7.2
