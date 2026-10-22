@@ -155,7 +155,7 @@ func buildProvider(cfg *buildConfig) (Provider, error) {
 		Name:         providerName,
 		Version:      cfg.version,
 		Description:  "Devsy on CIVO Cloud",
-		Icon:         "https://raw.githubusercontent.com/devsy-org/devsy/main/desktop/src/images/civo.svg",
+		Icon:         "https://raw.githubusercontent.com/devsy-org/devsy/main/desktop/src/renderer/public/icons/providers/civo.svg",
 		OptionGroups: buildOptionGroups(),
 		Options:      buildOptions(),
 		Agent:        agent,
