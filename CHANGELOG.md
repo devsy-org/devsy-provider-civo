@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.20](https://github.com/devsy-org/devsy-provider-civo/compare/v1.1.19...v1.1.20) (2026-10-23)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/civo/civogo to v0.7.5 ([#95](https://github.com/devsy-org/devsy-provider-civo/issues/95)) ([9bef256](https://github.com/devsy-org/devsy-provider-civo/commit/9bef256eb4785d637e9d123979b10eb8539f7a20))
+
 ## [1.1.19](https://github.com/devsy-org/devsy-provider-civo/compare/v1.1.18...v1.1.19) (2026-08-11)
 
 
