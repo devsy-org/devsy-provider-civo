@@ -43,3 +43,11 @@ Options can be set using `devsy provider set-options`, for example:
 ```sh
 devsy provider set-options -o CIVO_REGION=LON1
 ```
+
+### Logging
+
+The provider writes diagnostic logs to standard error. Protocol results and command output keep their existing streams.
+
+Set `DEVSY_LOG_LEVEL` to `error`, `warn`, `info`, `debug`, or `trace`. The default is `info` when the provider runs standalone. Devsy passes its effective level to the provider.
+
+Set `DEVSY_LOG_FORMAT` to `json`, `text`, `plain`, or `logfmt`. The default is `json`. The `auto` value also selects JSON for the provider protocol.

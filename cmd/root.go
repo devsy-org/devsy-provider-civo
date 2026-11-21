@@ -1,9 +1,13 @@
 package cmd
 
 import (
+	"encoding/json"
+	"errors"
 	"os"
 	"os/exec"
 
+	"github.com/devsy-org/devsy/logging"
+	"github.com/devsy-org/devsy/logging/redact"
 	"github.com/devsy-org/devsy/pkg/log"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh"
@@ -18,11 +22,42 @@ func NewRootCmd() *cobra.Command {
 		SilenceUsage:  true,
 
 		PersistentPreRunE: func(cobraCmd *cobra.Command, args []string) error {
-			cfg := log.Config{Verbosity: 1}
-			if os.Getenv("DEVSY_DEBUG") == "true" {
-				cfg.Debug = true
+			var token struct {
+				APIKey string `json:"apikey"`
 			}
-			log.Init(cfg)
+			_ = json.Unmarshal([]byte(os.Getenv("CIVO_TOKEN")), &token)
+			redactor := redact.FromEntries([]string{"CIVO_API_KEY=" + token.APIKey})
+			invalidConfig := func(name string) error {
+				log.Init(
+					log.Config{
+						Level:        log.LevelInfoName,
+						DefaultLevel: log.LevelInfoName,
+						Format:       "json",
+						Redactor:     redactor,
+					},
+				)
+				return errors.New("invalid " + name)
+			}
+
+			cfg, invalid := logging.ResolveProvider(
+				os.Getenv("DEVSY_LOG_LEVEL"),
+				os.Getenv("DEVSY_LOG_FORMAT"),
+			)
+			if invalid.Level {
+				return invalidConfig("DEVSY_LOG_LEVEL")
+			}
+			if invalid.Format {
+				return invalidConfig("DEVSY_LOG_FORMAT")
+			}
+
+			log.Init(
+				log.Config{
+					Level:        logging.LevelName(cfg.Level),
+					DefaultLevel: log.LevelInfoName,
+					Format:       string(cfg.Format),
+					Redactor:     redactor,
+				},
+			)
 
 			return nil
 		},
